@@ -11,7 +11,7 @@ public class HomeController {
 	
 	@GetMapping("/") // 현재경로로 접근 
 	public String index() {
-		return "index"; // 웹페이지
+		return "index"; // 웹페이지 dddddd
 	}
 	public String a() {
 		return "";
