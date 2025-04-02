@@ -81,10 +81,20 @@ public class Boardcontroller {
 		String filePath = null;
 
 		// 윈도우
-		File uploadDir = new File(UPLOAD_DIR);
-		if (!uploadDir.exists()) {
-			uploadDir.mkdirs();
+//		File uploadDir = new File(UPLOAD_DIR);
+//		if (!uploadDir.exists()) {
+//			uploadDir.mkdirs();
+//		}
+		
+		try {
+			createDirectoryWithPermissions(UPLOAD_DIR);
+			
+		}catch(IOException e) {
+			e.printStackTrace();
+			return "error";
+		
 		}
+		
 
 		if (file != null && !file.isEmpty()) {
 			try {
@@ -92,7 +102,7 @@ public class Boardcontroller {
 				String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 				fileName = UUID.randomUUID().toString() + fileExtension;
 				filePath = UPLOAD_DIR + fileName;
-
+				
 				File dest = new File(filePath);
 				file.transferTo(dest);
 			} catch (IOException e) {
