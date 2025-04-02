@@ -36,7 +36,7 @@ public class Boardcontroller {
 //	private static final String UPLOAD_DIR = "C:/upload/";
 
 	// 리눅스
-	private static final String UPLOAD_DIR = "/opt/tomcat9/bin";
+	private static final String UPLOAD_DIR = "/opt/tomcat9/upload/";
 
 	@Autowired
 	private EntityManager entityManager;
