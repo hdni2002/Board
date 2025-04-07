@@ -175,7 +175,30 @@ public class Boardcontroller {
 			return ResponseEntity.internalServerError().build();
 		}
 	}
+	
+	@PostMapping("/deleteBoard")
+	@ResponseBody
+	@Transactional
+	public ResponseEntity<String> deletePost(@RequestParam("idx") Long idx) {
+		try {
+			String sql = "SELECT filepath FROM tbl_board WHERE idx = :idx";
+			String filePath = (String) entityManager.createNativeQuery(sql).setParameter("idx", idx).getSingleResult();
 
+			String deleteSql = "delete from tbl_board where idx = :idx";
+			entityManager.createNativeQuery(deleteSql).setParameter("idx", idx).executeUpdate();
+
+			if (filePath != null && !filePath.trim().isEmpty()) {
+				File file = new File(filePath);
+				if (file.exists()) {
+					file.delete();
+				}
+			}
+			return ResponseEntity.ok("삭제완료");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(500).body("삭제실패");
+		}
+	}
 
 	private static void createDirectoryWithPermissions(String dirPath) throws IOException {
 		Path path = Paths.get(dirPath);
@@ -210,3 +233,5 @@ public class Boardcontroller {
 
 	}
 }
+
+
